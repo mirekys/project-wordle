@@ -3,7 +3,9 @@
  * solving algorithm!
  */
 
-export function checkGuess(guess, answer) {
+import { GameStatus, NUM_OF_GUESSES_ALLOWED } from "./constants";
+
+export function checkGuess (guess, answer) {
   // This constant is a placeholder that indicates we've successfully
   // dealt with this character (it's correct, or misplaced).
   const SOLVED_CHAR = '✓';
@@ -52,4 +54,19 @@ export function checkGuess(guess, answer) {
   }
 
   return result;
+}
+
+
+export function activeGuesses (guesses) {
+  return guesses.filter(g => g !== '').length
+}
+
+
+export function checkGameResult (guesses, answer) {
+  if (guesses.find(guess => guess === answer)) {
+    return GameStatus.WON
+  } else if (activeGuesses(guesses) === NUM_OF_GUESSES_ALLOWED) {
+    return GameStatus.LOST
+  }
+  return GameStatus.ONGOING
 }
